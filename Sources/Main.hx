@@ -9,12 +9,24 @@ class Main {
 	public static function main() {
 		System.init({title: "Project", width: 1024, height: 768}, function () {
 			#if js
-			haxe.macro.Compiler.includeFile("../Libraries/Bullet/js/ammo/ammo.js");
+			//haxe.macro.Compiler.includeFile("../Libraries/Bullet/js/ammo/ammo.wasm.js");
+			kha.LoaderImpl.loadBlobFromDescription({ files: ["ammo.js"] }, function(b: kha.Blob) {
+				var print = function(s:String) { trace(s); };
+				var loaded = function() { print("ammo ready"); };
+				untyped __js__("(1, eval)({0})", b.toString());
+				untyped __js__("Ammo({print:print}).then(loaded)");
+				init();
+			});
+			#else
+			init();
 			#end
-			initPhysics();
-			System.notifyOnRender(render);
-			Scheduler.addTimeTask(update, 0, 1 / 60);
 		});
+	}
+
+	static function init(): Void {
+		initPhysics();
+		System.notifyOnRender(render);
+		Scheduler.addTimeTask(update, 0, 1 / 60);
 	}
 
 	static var dynamicsWorld: BtDynamicsWorld;
@@ -22,9 +34,9 @@ class Main {
 
 	static function initPhysics(): Void {
 		var collisionConfiguration = BtDefaultCollisionConfiguration.create();
-		var dispatcher = new BtCollisionDispatcher(collisionConfiguration);
-		var broadphase = new BtDbvtBroadphase();
-		var solver = new BtSequentialImpulseConstraintSolver();
+		var dispatcher = BtCollisionDispatcher.create(collisionConfiguration);
+		var broadphase = BtDbvtBroadphase.create();
+		var solver = BtSequentialImpulseConstraintSolver.create();
 		dynamicsWorld = new BtDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
 		var groundShape = BtStaticPlaneShape.create(BtVector3.create(0, 1, 0), 1);
