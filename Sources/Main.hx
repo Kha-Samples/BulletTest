@@ -37,7 +37,7 @@ class Main {
 		var dispatcher = BtCollisionDispatcher.create(collisionConfiguration);
 		var broadphase = BtDbvtBroadphase.create();
 		var solver = BtSequentialImpulseConstraintSolver.create();
-		dynamicsWorld = new BtDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+		dynamicsWorld = BtDiscreteDynamicsWorld.create(dispatcher, broadphase, solver, collisionConfiguration);
 
 		var groundShape = BtStaticPlaneShape.create(BtVector3.create(0, 1, 0), 1);
 		var groundTransform = BtTransform.create();
