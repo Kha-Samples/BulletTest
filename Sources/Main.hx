@@ -29,8 +29,8 @@ class Main {
 		Scheduler.addTimeTask(update, 0, 1 / 60);
 	}
 
-	static var dynamicsWorld: BtDynamicsWorld;
-	static var fallRigidBody: BtRigidBody;
+	static var dynamicsWorld;
+	static var fallRigidBody;
 
 	static function initPhysics(): Void {
 		var collisionConfiguration = BtDefaultCollisionConfiguration.create();
