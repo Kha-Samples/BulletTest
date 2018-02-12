@@ -4,5 +4,5 @@
 	branch = master
 [submodule "Libraries/Bullet"]
 	path = Libraries/Bullet
-	url = https://github.com/armory3d/haxebullet.git
+	url = https://github.com/Kha-Samples/haxebullet.git
 	branch = master
