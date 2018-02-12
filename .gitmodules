@@ -1,0 +1,8 @@
+[submodule "Kha"]
+	path = Kha
+	url = https://github.com/Kode/Kha.git
+	branch = master
+[submodule "Libraries/Bullet"]
+	path = Libraries/Bullet
+	url = https://github.com/armory3d/haxebullet.git
+	branch = master
